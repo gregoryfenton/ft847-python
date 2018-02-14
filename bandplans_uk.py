@@ -566,7 +566,7 @@ class bandplan(object):
 		if (108050000 <= frequency < 117950000):
 			signal = "ILS/VOR/ATIS (%d)\n50000" % ((frequency - 108000000) / 50000)
 		if (118000000 <= frequency < 136991660):
-			signal = "Airband AM Communications (%d)\n8333" % ((frequency - 118000000) / (25000 / 3))
+			signal = "Airband AM Communications (%d)\n8333" % ((frequency - 118000000) / (25000 / 3) + 1)
 		if (118675000 <= frequency < 118683333):
 			signal = "Paragliding (below 5000 feet)\n8333"
 		if (119700000 <= frequency < 119708333):
@@ -640,11 +640,11 @@ class bandplan(object):
 		if (144962500 <= frequency < 144963500):
 			signal = "FM Internet voice gateway\n12500"
 		if (144990000 <= frequency < 145193500):
-			signal = "FM/DV RV48 - RV63 Repeater input exclusive\n12500"
+			signal = "FM/DV RV48 - RV63 Repeater input exclusive (channel %d)\n12500" % ((frequency - 144990000) / 12500 + 48)
 		if (145200000 <= frequency < 145201000):
 			signal = "FM/DV Space communications - Earth-to-Space\n12500"
 		if (145200000 <= frequency < 145593500):
-			signal = "FM/DV V16-V48 FM/DV simplex\n12500"
+			signal = "FM/DV V16-V48 FM/DV simplex (channel %d)\n12500" % ((frequency - 145200000) / 12500 + 16)
 		if (145225000 <= frequency < 145226000):
 			signal = "May be used for Emergency Communications and Community Events\n12500"
 		if (145237500 <= frequency < 145238500):
@@ -663,14 +663,12 @@ class bandplan(object):
 			signal = "Used for rally/exhibition talk-in\n12500"
 		if (145593500 <= frequency < 145793500):
 			signal = "FM/DV RV48 - RV63 Repeater output\n12500"
-		if (145687500 <= frequency < 145688500):
-			signal = "GB3CD repeater\n12500"
 		if (145800000 <= frequency < 145801000):
 			signal = "FM/DV Space communications (e.g. I.S.S.) - Space-Earth\n12500"
 		if (145806000 <= frequency < 146000000):
 			signal = "All Modes - Satellite exclusive\n12500"
 		if (146000000 <= frequency < 146900000):
-			signal = "Wideband Digital Modes (High speed data , DATV etc)\n500000"
+			signal = "Wideband Digital Modes (High speed data, DATV etc)\n500000"
 		if (146500000 <= frequency < 146501000):
 			signal = "Centre frequency for wideband modes\n500000"
 		if (146900000 <= frequency < 147000000):
@@ -716,7 +714,7 @@ class bandplan(object):
 		if (432500000 <= frequency < 432994000):
 			signal = "All modes non-channelised\n25000"
 		if (432500000 <= frequency < 432501000):
-			signal = "Narrow band SSTV activity centre\n25000"
+			signal = "Narrow band ` activity centre\n25000"
 		if (432625000 <= frequency < 432675000):
 			signal = "Digital communications (25 kHz channels)\n25000"
 		if (432775000 <= frequency < 432776000):
@@ -724,11 +722,11 @@ class bandplan(object):
 		if (432994000 <= frequency < 433381000):
 			signal = "FM repeater outputs\n25000"
 		if (433000000 <= frequency < 433735000):
-			signal = "(RB0-RB15) RU240-RU270\n25000"
+			signal = "Channel RB%d/RU%d output\n25000" % ((frequency - 433000000) / 25000, 240 + (int((frequency - 433000000) / 25000)) * 2)
 		if (433000000 <= frequency < 433001000):
-			signal = "GB3NT repeater\n25000"
+			signal = "GB3NT repeater output (CTCSS 118.8, NFM)\n25000"
 		if (433175000 <= frequency < 433176000):
-			signal = "GB3TS repeater\n25000"
+			signal = "GB3TS repeater output (CTCSS 118.8, NFM)\n25000"
 		if (433394000 <= frequency < 433581000):
 			signal = "FM/DV simplex channels\n25000"
 		if (433400000 <= frequency < 433401000):
@@ -756,11 +754,11 @@ class bandplan(object):
 		if (434594000 <= frequency < 434981000):
 			signal = "FM repeater inputs and ATV\n25000"
 		if (434600000 <= frequency < 434975000):
-			signal = "(RB0-RB15) RU240-RU270\n25000"
+			signal = "Channel RB%d/RU%d input\n25000" % ((frequency - 434600000) / 25000, 240 + (int((frequency - 434600000) / 25000)) * 2)
 		if (434600000 <= frequency < 434601000):
-			signal = "GB3NT Repeater input\n25000"
+			signal = "GB3NT Repeater input (CTCSS 118.8, NFM)\n25000"
 		if (434775000 <= frequency < 434776000):
-			signal = "GB3NT Repeater input\n25000"
+			signal = "GB3NT Repeater input (CTCSS 118.8, NFM)\n25000"
 		if (435000000 <= frequency < 438000000):
 			signal = "Satellites and fast scan TV\n20000"
 		if (437000000 <= frequency < 437001000):
@@ -781,6 +779,24 @@ class bandplan(object):
 			signal = "UK DV 9 MHz reverse-split repeaters - Inputs\n25000"
 		if (439400000 <= frequency < 439775000):
 			signal = "UK DV 9 MHz split repeaters - Outputs\n25000"
+		if (145687500 == frequency):
+			signal = "GB3CD repeater output (CTCSS 118.8, NFM, in -0.6MHz)\n12500"
+		if (145087500 == frequency):
+			signal = "GB3CD repeater input (CTCSS 118.8, NFM, out +0.6MHz)\n12500"
+		if (145287500 == frequency):
+			signal = "MB7IAB ROIP gateway (CTCSS 118.8, NFM)\n2700"
+		if (433300000 == frequency):
+			signal = "GB3TJ repeater output (CTCSS 118.8, NFM)\n2700"
+		if (434900000 == frequency):
+			signal = "GB3TJ repeater input (CTCSS 118.8, NFM)\n2700"
+		if (439462500 == frequency):
+			signal = "GB7XX DMR Repeater on Brandmeister output (-9MHz, colour code 10)\n2700"
+		if (430462500 == frequency):
+			signal = "GB7XX DMR Repeater on Brandmeister input (out +9MHz, colour code 10)\n2700"
+		if (439525000 == frequency):
+			signal = "GB7DZ DMR Repeater on Brandmeister output (-9MHz, colour code 7)\n2700"
+		if (430462500 == frequency):
+			signal = "GB7DZ DMR Repeater on Brandmeister input (out +9MHz, colour code 7)\n2700"
 		if (frequency in [28721000, 24933000, 21313000, 18119000, 14240000, 14236000, 7190000, 7177000, 5403500, 3817000, 3732000, 1997000]):
 			signal = "FreeDV frequency\n2700"
 		if (frequency in [137975000, 138075000, 138150000, 138175000, 153025000, 153125000, 153150000, 153175000, 153237500, 153250000,\
