@@ -46,7 +46,7 @@ class FT847(object):
 	CMD_SET_CTCSS = [0x2A, 0x00, 0x00, 0x00, 0x0A]
 	CMD_SET_TONE = [0x1A, 0x00, 0x00, 0x00, 0x0B]
 	CMD_SET_RPT_SHIFT = [0x49, 0x00, 0x00, 0x00, 0x09]
-	
+
 	def __init__(self, serial_port, serial_speed=SERIAL_SPEED, serial_stopbits=SERIAL_STOPBITS):
 		self._serial = serial.Serial(serial_port, serial_speed, stopbits=serial_stopbits, timeout=FT847.SERIAL_TIMEOUT)
 		self._frequency = ""
@@ -61,7 +61,15 @@ class FT847(object):
 	
 	#cmd = FT847.CMD_CAT_ON
 	#self._serial.write(cmd)
-		
+	
+	#m1fly
+	def init_cat_on(self):
+		self._serial.reset_input_buffer()
+		self._serial.reset_output_buffer()
+		cmd = FT847.CMD_CAT_ON
+		self._serial.write(cmd)
+	#end m1fly
+	
 	def read_frequency(self):
 		'''Queries transceiver RX frequency and mode.
 		The response is 5 bytes: first four store frequency and

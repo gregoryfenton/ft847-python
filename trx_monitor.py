@@ -14,7 +14,8 @@ from ft847 import FT847
 import time, atexit
 
 # Constants
-SERIAL_PORT = "COM6"
+SERIAL_PORT = "/dev/ttyUSB0"   # Linux serial port,  my user needed to be added to the dialout group
+#SERIAL_PORT = "COM1"          # windows serial port  
 SAMPLES_PER_SEC = 4
 
 box_TL = '/'
@@ -72,6 +73,7 @@ if __name__ == '__main__':
 			delay = 1.0 / SAMPLES_PER_SEC
 			#ft847.gb3ts()
 			oldstr = {}
+			ft847.init_cat_on()  #M1FLY needed for my old ft847 after power on.
 			while True:
 				ft847.read_frequency()
 				ft847.read_rx_status()
